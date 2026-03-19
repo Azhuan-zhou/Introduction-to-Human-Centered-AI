@@ -1,0 +1,111 @@
+.word-card {
+  background: white;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: box-shadow 0.15s;
+}
+
+.word-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.word-card.saved {
+  border-color: #c7d4f8;
+  background: #f8faff;
+}
+
+.word-top {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-tts {
+  margin-left: auto;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0.1rem 0.3rem;
+  border-radius: 4px;
+  transition: opacity 0.15s;
+  line-height: 1;
+}
+
+.btn-tts:hover:not(:disabled) {
+  opacity: 0.7;
+}
+
+.btn-tts.speaking {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.word-text {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+.word-ipa {
+  font-size: 0.82rem;
+  color: #888;
+  font-style: italic;
+}
+
+.word-definition {
+  font-size: 0.88rem;
+  color: #444;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.word-example {
+  font-size: 0.83rem;
+  color: #777;
+  margin: 0;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.word-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.btn-approve {
+  padding: 0.35rem 0.8rem;
+  background: #4f6ef7;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btn-approve:hover {
+  background: #3a58e0;
+}
+
+.btn-dismiss {
+  padding: 0.35rem 0.8rem;
+  background: white;
+  color: #888;
+  border: 1.5px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-dismiss:hover {
+  border-color: #999;
+  color: #555;
+}

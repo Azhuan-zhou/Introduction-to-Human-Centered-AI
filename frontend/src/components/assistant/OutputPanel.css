@@ -1,0 +1,111 @@
+.output-panel {
+  background: #f8faff;
+  border: 1.5px solid #c7d4f8;
+  border-radius: 12px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.output-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.output-label {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #4f6ef7;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.output-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.35rem 0.75rem;
+  border: 1.5px solid #d1d5db;
+  border-radius: 6px;
+  background: white;
+  color: #555;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.icon-btn:hover {
+  border-color: #4f6ef7;
+  color: #4f6ef7;
+}
+
+.icon-btn.active,
+.icon-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.output-text {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #1a1a2e;
+  white-space: pre-wrap;
+}
+
+.btn-secondary {
+  padding: 0.65rem 1.2rem;
+  background: white;
+  color: #4f6ef7;
+  border: 1.5px solid #4f6ef7;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  align-self: flex-start;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: rgba(79, 110, 247, 0.06);
+}
+
+.btn-secondary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-loading {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(79, 110, 247, 0.3);
+  border-top-color: #4f6ef7;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.error-banner {
+  padding: 0.75rem 1rem;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  color: #dc2626;
+  font-size: 0.9rem;
+}

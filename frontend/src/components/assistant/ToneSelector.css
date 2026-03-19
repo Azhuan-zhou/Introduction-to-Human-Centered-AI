@@ -1,0 +1,57 @@
+.tone-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.tone-label {
+  font-weight: 600;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.tone-options {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.tone-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0.6rem 1rem;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: left;
+  flex: 1;
+  min-width: 140px;
+}
+
+.tone-btn:hover {
+  border-color: #4f6ef7;
+}
+
+.tone-btn.active {
+  border-color: #4f6ef7;
+  background: rgba(79, 110, 247, 0.06);
+}
+
+.tone-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.tone-btn.active .tone-name {
+  color: #4f6ef7;
+}
+
+.tone-desc {
+  font-size: 0.78rem;
+  color: #888;
+  margin-top: 2px;
+}

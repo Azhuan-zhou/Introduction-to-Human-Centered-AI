@@ -37,7 +37,7 @@ export function DashboardPage() {
           <span className="stat-label">Quizzes Taken</span>
         </div>
         <div className="stat-card">
-          <span className="stat-value">{overallAccuracy !== null ? `${overallAccuracy}%` : "—"}</span>
+          <span className="stat-value">{overallAccuracy !== null ? `${overallAccuracy}%` : "-"}</span>
           <span className="stat-label">Overall Accuracy</span>
         </div>
       </div>

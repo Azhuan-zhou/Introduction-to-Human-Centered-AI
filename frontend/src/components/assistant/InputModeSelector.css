@@ -1,0 +1,47 @@
+.input-mode-selector {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.input-mode-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.2rem;
+  padding: 0.95rem 1rem;
+  border: 1.5px solid #d7dbef;
+  border-radius: 12px;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  text-align: left;
+}
+
+.input-mode-card:hover {
+  border-color: #9aa8f7;
+  background: #f8faff;
+}
+
+.input-mode-card.active {
+  border-color: #6a7cff;
+  background: #eef2ff;
+  box-shadow: 0 0 0 3px rgba(106, 124, 255, 0.12);
+}
+
+.input-mode-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+.input-mode-subtitle {
+  font-size: 0.88rem;
+  color: #6b7280;
+}
+
+@media (max-width: 640px) {
+  .input-mode-selector {
+    grid-template-columns: 1fr;
+  }
+}

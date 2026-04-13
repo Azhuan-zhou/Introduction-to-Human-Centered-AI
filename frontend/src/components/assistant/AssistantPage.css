@@ -82,3 +82,11 @@
   color: #dc2626;
   font-size: 0.9rem;
 }
+
+.assistant-input-section {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 1.25rem;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+}

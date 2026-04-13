@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useSyncExternalStore } from "react";
 import type { VocabWord, QuizResult, ReviewStats } from "../types";
 
 const STORAGE_KEY = "vocab_words";
@@ -6,15 +6,21 @@ const QUIZ_KEY = "quiz_results";
 const STREAK_KEY = "streak_data";
 
 interface StreakData {
-  lastActiveDate: string; // ISO date string (date only)
+  lastActiveDate: string;
   currentStreak: number;
+}
+
+interface VocabularyState {
+  words: VocabWord[];
+  quizResults: QuizResult[];
+  streak: StreakData;
 }
 
 function todayStr(): string {
   return new Date().toISOString().split("T")[0];
 }
 
-function loadFromStorage(): VocabWord[] {
+function loadWords(): VocabWord[] {
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
     return stored ? (JSON.parse(stored) as VocabWord[]) : [];
@@ -23,7 +29,7 @@ function loadFromStorage(): VocabWord[] {
   }
 }
 
-function saveToStorage(words: VocabWord[]) {
+function saveWords(words: VocabWord[]) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(words));
 }
 
@@ -36,13 +42,23 @@ function loadQuizResults(): QuizResult[] {
   }
 }
 
+function saveQuizResults(results: QuizResult[]) {
+  localStorage.setItem(QUIZ_KEY, JSON.stringify(results));
+}
+
 function loadStreak(): StreakData {
   try {
     const stored = localStorage.getItem(STREAK_KEY);
-    return stored ? (JSON.parse(stored) as StreakData) : { lastActiveDate: "", currentStreak: 0 };
+    return stored
+      ? (JSON.parse(stored) as StreakData)
+      : { lastActiveDate: "", currentStreak: 0 };
   } catch {
     return { lastActiveDate: "", currentStreak: 0 };
   }
+}
+
+function saveStreak(streak: StreakData) {
+  localStorage.setItem(STREAK_KEY, JSON.stringify(streak));
 }
 
 function updateStreak(current: StreakData): StreakData {
@@ -56,13 +72,16 @@ function updateStreak(current: StreakData): StreakData {
   const newStreak =
     current.lastActiveDate === yesterdayStr ? current.currentStreak + 1 : 1;
 
-  const updated = { lastActiveDate: today, currentStreak: newStreak };
-  localStorage.setItem(STREAK_KEY, JSON.stringify(updated));
-  return updated;
+  return {
+    lastActiveDate: today,
+    currentStreak: newStreak,
+  };
 }
 
-// SM-2 simplified: calculate next review date and ease factor
-function calcNextReview(stats: ReviewStats | undefined, correct: boolean): ReviewStats {
+function calcNextReview(
+  stats: ReviewStats | undefined,
+  correct: boolean
+): ReviewStats {
   const ef = stats ? stats.easeFactor : 2.5;
   const correctCount = stats ? stats.correctCount : 0;
   const incorrectCount = stats ? stats.incorrectCount : 0;
@@ -83,7 +102,12 @@ function calcNextReview(stats: ReviewStats | undefined, correct: boolean): Revie
     intervalDays = 3;
   } else {
     const prevInterval = stats?.nextReviewDate
-      ? Math.max(1, Math.round((new Date(stats.nextReviewDate).getTime() - Date.now()) / 86400000))
+      ? Math.max(
+          1,
+          Math.round(
+            (new Date(stats.nextReviewDate).getTime() - Date.now()) / 86400000
+          )
+        )
       : 1;
     intervalDays = Math.max(1, Math.round(prevInterval * newEf));
   }
@@ -99,76 +123,125 @@ function calcNextReview(stats: ReviewStats | undefined, correct: boolean): Revie
   };
 }
 
-export function useVocabularyStore() {
-  const [words, setWords] = useState<VocabWord[]>(loadFromStorage);
-  const [quizResults, setQuizResults] = useState<QuizResult[]>(loadQuizResults);
-  const [streak, setStreak] = useState<StreakData>(loadStreak);
+let state: VocabularyState = {
+  words: loadWords(),
+  quizResults: loadQuizResults(),
+  streak: loadStreak(),
+};
 
-  const approveWord = (word: VocabWord) => {
-    setWords((prev) => {
-      if (prev.find((w) => w.word === word.word)) return prev;
-      const updated = [...prev, word];
-      saveToStorage(updated);
-      return updated;
-    });
-  };
+const listeners = new Set<() => void>();
 
-  const removeWord = (id: string) => {
-    setWords((prev) => {
-      const updated = prev.filter((w) => w.id !== id);
-      saveToStorage(updated);
-      return updated;
-    });
-  };
+function emitChange() {
+  listeners.forEach((listener) => listener());
+}
 
-  const clearAll = () => {
-    localStorage.removeItem(STORAGE_KEY);
-    setWords([]);
-  };
+function setState(updater: (prev: VocabularyState) => VocabularyState) {
+  state = updater(state);
+  saveWords(state.words);
+  saveQuizResults(state.quizResults);
+  saveStreak(state.streak);
+  emitChange();
+}
 
-  const saveQuizResult = (score: number, total: number) => {
-    const result: QuizResult = {
-      date: new Date().toISOString(),
-      score,
-      total,
-      percentage: Math.round((score / total) * 100),
-    };
-    setQuizResults((prev) => {
-      const updated = [result, ...prev].slice(0, 20); // keep last 20
-      localStorage.setItem(QUIZ_KEY, JSON.stringify(updated));
-      return updated;
-    });
-    setStreak((prev) => updateStreak(prev));
-  };
+function subscribe(listener: () => void) {
+  listeners.add(listener);
+  return () => listeners.delete(listener);
+}
 
-  const updateWordReview = (wordId: string, correct: boolean) => {
-    setWords((prev) => {
-      const updated = prev.map((w) =>
-        w.id === wordId
-          ? { ...w, reviewStats: calcNextReview(w.reviewStats, correct) }
-          : w
-      );
-      saveToStorage(updated);
-      return updated;
-    });
-  };
+function getSnapshot() {
+  return state;
+}
 
-  const getWordsDueForReview = (): VocabWord[] => {
-    const now = new Date();
-    return words.filter(
-      (w) => !w.reviewStats || new Date(w.reviewStats.nextReviewDate) <= now
+function approveWord(word: VocabWord) {
+  setState((prev) => {
+    const exists = prev.words.some(
+      (w) => w.word.toLowerCase() === word.word.toLowerCase()
     );
+    if (exists) return prev;
+
+    return {
+      ...prev,
+      words: [...prev.words, word],
+    };
+  });
+}
+
+function addWords(wordsToAdd: VocabWord[]) {
+  setState((prev) => {
+    const existing = new Set(prev.words.map((w) => w.word.toLowerCase()));
+    const uniqueNewWords = wordsToAdd.filter(
+      (word) => !existing.has(word.word.toLowerCase())
+    );
+
+    if (uniqueNewWords.length === 0) return prev;
+
+    return {
+      ...prev,
+      words: [...prev.words, ...uniqueNewWords],
+    };
+  });
+}
+
+function removeWord(id: string) {
+  setState((prev) => ({
+    ...prev,
+    words: prev.words.filter((w) => w.id !== id),
+  }));
+}
+
+function clearAll() {
+  setState((prev) => ({
+    ...prev,
+    words: [],
+  }));
+}
+
+function saveQuizResult(score: number, total: number) {
+  const result: QuizResult = {
+    date: new Date().toISOString(),
+    score,
+    total,
+    percentage: Math.round((score / total) * 100),
   };
+
+  setState((prev) => ({
+    ...prev,
+    quizResults: [result, ...prev.quizResults].slice(0, 20),
+    streak: updateStreak(prev.streak),
+  }));
+}
+
+function updateWordReview(wordId: string, correct: boolean) {
+  setState((prev) => ({
+    ...prev,
+    words: prev.words.map((w) =>
+      w.id === wordId
+        ? { ...w, reviewStats: calcNextReview(w.reviewStats, correct) }
+        : w
+    ),
+  }));
+}
+
+function getWordsDueForReview(words: VocabWord[]): VocabWord[] {
+  const now = new Date();
+  return words.filter(
+    (w) => !w.reviewStats || new Date(w.reviewStats.nextReviewDate) <= now
+  );
+}
+
+export function useVocabularyStore() {
+  const snapshot = useSyncExternalStore(subscribe, getSnapshot, getSnapshot);
 
   return {
-    words,
-    quizResults,
-    streak: streak.currentStreak,
+    words: snapshot.words,
+    quizResults: snapshot.quizResults,
+    streak: snapshot.streak.currentStreak,
     approveWord,
+    addWords,
     removeWord,
     clearAll,
     saveQuizResult,
     updateWordReview,
-    getWordsDueForReview,
+    getWordsDueForReview: () => getWordsDueForReview(snapshot.words),
   };
 }

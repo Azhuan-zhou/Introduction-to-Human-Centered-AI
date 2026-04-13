@@ -9,8 +9,8 @@ type Mode = "deck" | "quiz";
 
 export function FlashcardsPage() {
   const { words, clearAll, saveQuizResult, updateWordReview } = useVocabularyStore();
-  const [mode, setMode] = useState<Mode>("deck");
   const navigate = useNavigate();
+  const [mode, setMode] = useState<Mode>("deck");
 
   if (words.length === 0) {
     return (

@@ -30,20 +30,20 @@ Six semi-structured interviews were conducted with international graduate studen
 ## Interview Question:
 Demographics: Name, Country, First Language
 1.Can you describe a specific moment this week where you felt your English held you back?
-2.How do you feel right before you have to speak in front of your class — what goes through your mind?
+2.How do you feel right before you have to speak in front of your class - what goes through your mind?
 1. When you write an email to a professor, how long does it usually take you, and what makes it hard? 
 2. Do you ever write something in your native language first, then try to translate it? How does that go?
 3. Is there a word or phrase you keep forgetting in English that you wish would just "stick"? What do you usually do about it?
-4. After a class discussion where you didn't understand some words, do you go back and look them up — or do you move on?
+4. After a class discussion where you didn't understand some words, do you go back and look them up - or do you move on?
 5. How much time per day, realistically, would you spend on an app meant to improve your English? 
 6. What has made you give up on a language learning tool in the past?
 7. Have you ever avoided participating in a class discussion because you weren't confident enough in your English? What was that like?
-8.  How important is it to you that your English still "sounds like you" — rather than sounding overly formal or robotic?
+8.  How important is it to you that your English still "sounds like you" - rather than sounding overly formal or robotic?
 9.  What tools do you currently use to help you communicate or improve English?
 12.. When you encounter a new English word, what do you usually do? Look it up once and move on, Write it down somewhere, Try to remember it mentally, Use flashcards or vocabulary apps
 1.  Do you keep track of vocabulary that you learn or struggle with?
 2.  Would it help if an app automatically tracked difficult or new words that you encounter?
-3.  What do you think is the biggest problem you face in communication in English — for example, grammar, vocabulary, people speaking too fast, or not feeling confident enough to speak?
+3.  What do you think is the biggest problem you face in communication in English - for example, grammar, vocabulary, people speaking too fast, or not feeling confident enough to speak?
 4.  If a tool could help you structure your ideas into clear sentences or presentation drafts, would you use it?
 
 ## Key Findings: 
@@ -57,7 +57,7 @@ Finding 3: Passive vocabulary decay is universal, but nobody actively fights it
 All three participants encounter unfamiliar words regularly. Person 2 admits to looking words up once and immediately forgetting them. Person 1 wants vocabulary tracking but does not maintain it. Person 3 kept a phrase notebook in their early years but eventually stopped. The consistent pattern is that everyone recognizes the value of retention but finds the cognitive overhead of manual tracking unsustainable alongside graduate coursework. The effort cost, not the lack of awareness, is what prevents sustained vocabulary building.
 
 Finding 4: The confidence gap has social and identity consequences beyond academics
-Person 3’s reflection is particularly revealing: they describe having “a full personality” in Chinese but becoming “a much quieter person” in English, with classmates mistaking their language barrier for shyness. Person 2 holds back in group discussions whenever they are not structurally required to lead. Person 1 has not avoided participation but acknowledges difficulty following culturally embedded humor and idiom. The language barrier does not merely reduce academic performance—it flattens students’ social identities, making them appear less capable or engaged than they actually are.
+Person 3’s reflection is particularly revealing: they describe having “a full personality” in Chinese but becoming “a much quieter person” in English, with classmates mistaking their language barrier for shyness. Person 2 holds back in group discussions whenever they are not structurally required to lead. Person 1 has not avoided participation but acknowledges difficulty following culturally embedded humor and idiom. The language barrier does not merely reduce academic performance-it flattens students’ social identities, making them appear less capable or engaged than they actually are.
 
 Finding 5: Existing tools fail because they feel like studying
 Person 3 states directly that the moment an app feels like homework, they abandon it. Person 2 dropped their TOEFL vocabulary app as soon as exam pressure disappeared. Person 1 gravitates toward game-like formats such as Wordle and NYT crosswords. The through-line is that extrinsic motivation (test preparation, streak counts) does not sustain engagement, and anything that frames itself as deliberate study gets abandoned once the external pressure is removed. Tools that survived were those that felt like entertainment or were embedded in daily life (Netflix, casual word games).
@@ -103,6 +103,6 @@ Secondly, students are already busy and have to manage multiple online systems f
 Third, like any AI system, there are some relevant privacy concerns because users will be typing snippets of speech they encounter as well as they may mention their location and other personal details when prompting. 
 Proposed system
 Our system is a mobile app designed for international students who know what they want to say in English but struggle to say it naturally. The system works in two connected parts.
-The first part is a speech and writing assistant. The user types or speaks a rough idea in any language or broken English, and the app instantly returns a clean, natural-sounding version in the tone they choose — formal for a professor, casual for a group chat, or academic for a presentation. This directly addresses what almost every interview participant asked for: not grammar correction, but sounding like a real person.
+The first part is a speech and writing assistant. The user types or speaks a rough idea in any language or broken English, and the app instantly returns a clean, natural-sounding version in the tone they choose - formal for a professor, casual for a group chat, or academic for a presentation. This directly addresses what almost every interview participant asked for: not grammar correction, but sounding like a real person.
 The second part is an automatic vocabulary list builder. Based on the ideas the user inputs, the system will suggest 10-15 words that could help the user better communicate their ideas. For example, if a person wants to discuss Explainable AI with a classmate who only speaks English, the person could describe those concepts in Mandarin, then the system would suggest “local explanations”, “saliency maps” and “contrastive explanations” as words to practice speaking naturally and learning. After the system confirms whether the user wants to practice with those words, it will then turn the approved list into flashcards, short quizzes, and daily review reminders. Users can see their progress in memorizing those words over time through a dashboard showing words learned, quiz scores, and streaks.
-The two parts work together — every time a user drafts something, they are also building their vocabulary without extra effort. This design directly responds to the research finding that users want improvement to happen passively, not feel like extra homework.
+The two parts work together - every time a user drafts something, they are also building their vocabulary without extra effort. This design directly responds to the research finding that users want improvement to happen passively, not feel like extra homework.

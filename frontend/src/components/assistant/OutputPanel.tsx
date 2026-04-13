@@ -40,6 +40,7 @@ export function OutputPanel({ rewrittenText, originalText, tone }: Props) {
       navigate("/vocabulary", { state: { suggestions: words } });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to generate vocabulary");
+    } finally {
       setIsLoadingVocab(false);
     }
   };
@@ -59,10 +60,6 @@ export function OutputPanel({ rewrittenText, originalText, tone }: Props) {
             title="Copy to clipboard"
             type="button"
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <rect x="9" y="9" width="13" height="13" rx="2" />
-              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-            </svg>
             Copy
           </button>
           <button
@@ -72,9 +69,6 @@ export function OutputPanel({ rewrittenText, originalText, tone }: Props) {
             title="Listen to pronunciation"
             type="button"
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
-            </svg>
             {isSpeaking ? "Playing..." : "Listen"}
           </button>
         </div>

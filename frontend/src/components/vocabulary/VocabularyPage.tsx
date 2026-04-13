@@ -13,11 +13,9 @@ export function VocabularyPage() {
   const suggestions: VocabWord[] = location.state?.suggestions ?? [];
   const [dismissed, setDismissed] = useState<Set<string>>(new Set());
 
-  // Add any suggestions that are already saved so they show as approved
   const savedWordSet = new Set(savedWords.map((w) => w.word));
 
   useEffect(() => {
-    // Scroll to top when suggestions arrive
     window.scrollTo(0, 0);
   }, [suggestions.length]);
 
@@ -33,7 +31,9 @@ export function VocabularyPage() {
     removeWord(id);
   };
 
-  const visibleSuggestions = suggestions.filter((w) => !dismissed.has(w.id) && !savedWordSet.has(w.word));
+  const visibleSuggestions = suggestions.filter(
+    (w) => !dismissed.has(w.id) && !savedWordSet.has(w.word)
+  );
 
   return (
     <div className="vocabulary-page">
@@ -83,7 +83,11 @@ export function VocabularyPage() {
           <div className="empty-state">
             <p>No words saved yet.</p>
             <p className="empty-hint">
-              Polish your writing on the <button className="link-btn" onClick={() => navigate("/")}>Assistant page</button> to get word suggestions.
+              Polish your writing on the{" "}
+              <button className="link-btn" onClick={() => navigate("/")} type="button">
+                Assistant page
+              </button>{" "}
+              to get word suggestions.
             </p>
           </div>
         ) : (
@@ -100,7 +104,8 @@ export function VocabularyPage() {
             </div>
             {savedWords.length < 4 && (
               <p className="empty-hint" style={{ marginTop: "1rem" }}>
-                Add {4 - savedWords.length} more word{4 - savedWords.length > 1 ? "s" : ""} to unlock flashcard practice.
+                Add {4 - savedWords.length} more word
+                {4 - savedWords.length > 1 ? "s" : ""} to unlock flashcard practice.
               </p>
             )}
           </>

@@ -1,4 +1,4 @@
-# SpeakEasy — English Practice for International Students
+# SpeakEasy - English Practice for International Students
 
 An AI-powered web app that helps international students communicate more naturally in English.
 
@@ -45,7 +45,7 @@ Open [http://localhost:5173](http://localhost:5173).
 
 ```
 HCA/
-├── backend/          # FastAPI — GPT-4o, Whisper, TTS
+├── backend/          # FastAPI - GPT-4o, Whisper, TTS
 │   └── app/
 │       ├── routers/  # assistant.py, vocabulary.py
 │       ├── services/ # openai_service.py, tts_service.py
